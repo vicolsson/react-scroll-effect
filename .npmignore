@@ -1,0 +1,6 @@
+tsconfig.json
+.DS_Store
+.git
+
+/src
+/examples
