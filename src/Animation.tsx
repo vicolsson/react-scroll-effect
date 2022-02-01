@@ -8,7 +8,7 @@ const baseStyles = {
   animationPlayState: 'paused'
 } as React.CSSProperties;
 
-function ScrollEffect(
+function Animation(
   {
     children,
     className = '',
@@ -33,4 +33,4 @@ function ScrollEffect(
   );
 }
 
-export default ScrollEffect;
+export default Animation;

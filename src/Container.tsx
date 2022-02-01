@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 const outerContainerStyles = {
   width: '100%',
   position: 'relative',
+  overflow: 'hidden',
 } as React.CSSProperties;
 
 const innerContainerStyles = {
