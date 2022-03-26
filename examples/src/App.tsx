@@ -4,10 +4,23 @@ import ReactScrollEffect from "react-scroll-effect";
 function App() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollContainer, setScrollContainer] = useState<HTMLDivElement | null>(null);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   useEffect(() => {
     setScrollContainer(scrollContainerRef?.current);
   }, [scrollContainerRef]);
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
 
   return (
     <div className="w-screen h-screen bg-white overflow-y-auto" ref={scrollContainerRef}>
@@ -17,7 +30,7 @@ function App() {
       <div className="mx-auto">
         <ReactScrollEffect.Container
           scrollContainer={scrollContainer}
-          scrollDistance={window.innerHeight * 3}
+          scrollDistance={windowHeight * 3}
           onlyAnimateFullyVisible
           containerClassName="inset-0 flex flex-col items-center justify-center"
         >
@@ -71,7 +84,7 @@ function App() {
       <div className="mx-auto bg-red-500 w-screen">
         <ReactScrollEffect.Container
           scrollContainer={scrollContainer}
-          scrollDistance={window.innerHeight}
+          scrollDistance={windowHeight}
           containerClassName="inset-0 flex flex-col items-center justify-center"
         >
           {(percentage) => (

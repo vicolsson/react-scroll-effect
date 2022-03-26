@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 const outerContainerStyles = {
   width: '100%',
   position: 'relative',
-  overflow: 'hidden',
+  overflow: 'visible',
 } as React.CSSProperties;
 
 const innerContainerStyles = {
@@ -31,7 +31,22 @@ function Container(
   const [percentage, setPercentage] = useState(0);
   const subContainerRef = useRef<HTMLDivElement>(null);
 
-  const scrollContainerHeight = scrollContainer?.clientHeight ?? 0;
+  const [scrollContainerHeight, setScrollContainerHeight] = useState(scrollContainer?.clientHeight ?? 0);
+
+  useEffect(() => {
+    if (!scrollContainer) return;
+
+    var ro = new ResizeObserver(() => {
+      setScrollContainerHeight(scrollContainer?.clientHeight ?? 0);
+      calculate();
+    });
+    
+    ro.observe(scrollContainer);
+
+    return () => {
+      ro.disconnect();
+    }
+  }, [scrollContainer])
 
   const calculate = useCallback(() => {
     const scrollContainerBoundingRect = scrollContainer?.getBoundingClientRect();
